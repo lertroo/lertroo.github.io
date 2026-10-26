@@ -7,12 +7,14 @@
 <meta name="description" content="GitHub Pagesで公開しているサイトの一覧">
 <link rel="stylesheet" href="style.css">
 <script>
-  // 描画前にテーマと文字サイズを当てて、ちらつきを防ぐ
+  // 描画前にテーマ・文字サイズ・フォントを当てて、ちらつきを防ぐ（決まりは app.js の apply と同じ）
   (() => {
     const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } };
-    const dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.dataset.theme = get('top-theme') || (dark ? 'dark' : 'light');
-    document.documentElement.dataset.font = get('top-font') || 'm';
+    const t = get('top-theme'), dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+    const r = document.documentElement;
+    r.dataset.theme = t === 'light' || t === 'dark' ? t : (dark ? 'dark' : 'light');
+    r.dataset.font = get('top-font') || 'm';
+    if (get('top-face') === 'sys') r.dataset.face = 'sys';
   })();
 </script>
 <script>
@@ -32,14 +34,14 @@
 <body>
 <header class="bar">
   <h1 class="title">サイト一覧</h1>
-  <div class="seg" id="font-seg" aria-label="文字サイズ">
-    <button type="button" data-font="s">小</button>
-    <button type="button" data-font="m">中</button>
-    <button type="button" data-font="l">大</button>
-  </div>
-  <div class="seg" id="theme-seg" aria-label="表示">
-    <button type="button" data-theme="light">ライト</button>
-    <button type="button" data-theme="dark">ダーク</button>
+  <div class="prefs">
+    <button type="button" class="prefbtn" id="prefbtn" aria-label="表示の設定" title="表示の設定" aria-expanded="false" aria-controls="prefmenu"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+    <div class="prefmenu" id="prefmenu" role="group" aria-label="表示の設定" hidden>
+      <div class="pmrow"><span class="pml">文字の大きさ</span><button type="button" id="fsm" aria-label="文字を小さく">A−</button><button type="button" id="fsp" aria-label="文字を大きく">A＋</button></div>
+      <div class="pmrow"><span class="pml">ライト/ダーク</span><button type="button" id="theme" aria-label="表示モードの切り替え">自動</button></div>
+      <div class="pmrow"><span class="pml">フォント</span><button type="button" id="face" aria-label="フォントの切り替え（サイトの指定／端末の標準）" title="サイトで指定した書体と、この端末の標準の書体を切り替えます">サイト指定</button></div>
+      <div class="pmrow"><button type="button" id="prefreset" aria-label="表示の設定を初期状態に戻す" title="文字の大きさ・ライト/ダーク・フォントを、初期状態に戻します">初期化</button></div>
+    </div>
   </div>
 </header>
 
@@ -52,7 +54,7 @@
       <p class="desc">地図上で、近くのウィキペディア記事を探すウェブページ</p>
     </li>
     <li>
-      <a href="https://lertroo.github.io/tsutsu-urara/">tsutsu-urara</a>
+      <a href="https://lertroo.github.io/tsutsu-urara/">津々浦ラ（ツツウララ）</a>
       <span class="url">https://lertroo.github.io/tsutsu-urara/</span>
       <p class="desc">日本地図の上で、行ったところを記録するウェブページ</p>
     </li>
@@ -60,5 +62,7 @@
 </main>
 
 <script src="app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&display=swap">
 </body>
 </html>

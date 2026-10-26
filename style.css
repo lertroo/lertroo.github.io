@@ -6,6 +6,7 @@
   --surface: #f4f6f8;
   --accent: #2b6cb0;
   --font-base: 15px;
+  --font: "BIZ UDPGothic", system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
   color-scheme: light;
 }
 :root[data-theme="dark"] {
@@ -20,6 +21,8 @@
 :root[data-font="s"] { --font-base: 13px; }
 :root[data-font="m"] { --font-base: 15px; }
 :root[data-font="l"] { --font-base: 18px; }
+/* フォント「端末の標準」：サイトの書体（Webフォント）を使わない */
+:root[data-face="sys"] { --font: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
 
 * { box-sizing: border-box; }
 html { font-size: var(--font-base); }
@@ -27,7 +30,7 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font: 1rem/1.45 system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font: 1rem/1.45 var(--font);
 }
 
 .bar {
@@ -40,20 +43,6 @@ body {
 }
 .title { flex: 1; margin: 0; font-size: 1.1rem; }
 
-.seg { display: flex; }
-.seg button {
-  font: inherit;
-  font-size: .85rem;
-  padding: 3px 10px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--fg);
-  cursor: pointer;
-}
-.seg button + button { border-left: none; }
-.seg button:first-child { border-radius: 6px 0 0 6px; }
-.seg button:last-child { border-radius: 0 6px 6px 0; }
-.seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 main { max-width: 720px; margin: 0 auto; padding: 8px 12px 16px; }
 .sites { list-style: none; margin: 0; padding: 0; }
@@ -62,3 +51,18 @@ main { max-width: 720px; margin: 0 auto; padding: 8px 12px 16px; }
 .sites a:hover { text-decoration: underline; }
 .url { display: block; color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
 .desc { margin: 2px 0 0; }
+
+/* 表示の設定（文字の大きさ・ライト/ダーク）は、右端の歯車のメニューにまとめる */
+.prefs { position: relative; }
+.prefbtn { display: grid; place-items: center; width: 32px; height: 30px; padding: 0; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
+.prefbtn:hover, .prefbtn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
+.prefbtn svg { width: 18px; height: 18px; }
+.prefmenu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 10; display: grid; gap: 8px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .15); }
+.pmrow { display: flex; align-items: center; gap: 12px; }
+.pml { flex: 1 1 auto; font-size: .8rem; color: var(--muted); white-space: nowrap; }
+.prefmenu button { font: inherit; font-size: .85rem; min-width: 34px; height: 30px; padding: 0 8px; color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; white-space: nowrap; }
+.prefmenu button:hover { color: var(--accent); border-color: var(--accent); }
+#theme { min-width: 4.5em; }
+#face { min-width: 6.5em; }
+#prefreset { flex: 1 1 auto; }
+.prefmenu button:disabled { opacity: .45; cursor: default; color: var(--fg); border-color: var(--border); }
