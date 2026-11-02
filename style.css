@@ -18,14 +18,12 @@
   --accent: #63a4ff;
   color-scheme: dark;
 }
-:root[data-font="s"] { --font-base: 13px; }
-:root[data-font="m"] { --font-base: 15px; }
-:root[data-font="l"] { --font-base: 18px; }
-/* フォント「端末の標準」：サイトの書体（Webフォント）を使わない */
-:root[data-face="sys"] { --font: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
+/* フォント「端末の標準」：サイトの書体（Webフォント）を使わない（属性の名前は津々浦ラと同じ） */
+:root[data-font="sys"] { --font: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
 
 * { box-sizing: border-box; }
-html { font-size: var(--font-base); }
+/* 文字の大きさ：--fs は 0.8〜1.5（津々浦ラと共通の設定 jp-fs を 100 で割ったもの） */
+html { font-size: calc(var(--font-base) * var(--fs, 1)); }
 body {
   margin: 0;
   background: var(--bg);

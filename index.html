@@ -9,12 +9,13 @@
 <script>
   // 描画前にテーマ・文字サイズ・フォントを当てて、ちらつきを防ぐ（決まりは app.js の apply と同じ）
   (() => {
-    const get = k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } };
-    const t = get('top-theme'), dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+    // 保存先は津々浦ラと共通（jp-fs・jp-theme・jp-font）
+    const get = k => { try { return localStorage.getItem(k); } catch { return null; } };
+    const t = get('jp-theme'), f = parseInt(get('jp-fs'), 10), dark = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
     const r = document.documentElement;
     r.dataset.theme = t === 'light' || t === 'dark' ? t : (dark ? 'dark' : 'light');
-    r.dataset.font = get('top-font') || 'm';
-    if (get('top-face') === 'sys') r.dataset.face = 'sys';
+    if (f >= 80 && f <= 150) r.style.setProperty('--fs', f / 100);
+    if (get('jp-font') === 'sys') r.dataset.font = 'sys';
   })();
 </script>
 <script>
