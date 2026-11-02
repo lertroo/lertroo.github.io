@@ -50,12 +50,22 @@ main { max-width: 720px; margin: 0 auto; padding: 8px 12px 16px; }
 .url { display: block; color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
 .desc { margin: 2px 0 0; }
 
+/* 作業者の紹介（津々浦ラの about.html の .prof に合わせた） */
+main h2 { margin: 10px 0 4px; font-size: .95rem; color: var(--muted); }
+.prof { padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.prof p { margin: 0 0 8px; font-size: .9rem; line-height: 1.7; }
+.prof .pname { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+.plinks { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; }
+.plinks a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.plinks a:hover { text-decoration: underline; }
+
 /* 表示の設定（文字の大きさ・ライト/ダーク）は、右端の歯車のメニューにまとめる */
 .prefs { position: relative; }
 .prefbtn { display: grid; place-items: center; width: 32px; height: 30px; padding: 0; color: var(--muted); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; }
 .prefbtn:hover, .prefbtn[aria-expanded="true"] { color: var(--accent); border-color: var(--accent); }
 .prefbtn svg { width: 18px; height: 18px; }
 .prefmenu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 10; display: grid; gap: 8px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .15); }
+.prefmenu[hidden] { display: none; }
 .pmrow { display: flex; align-items: center; gap: 12px; }
 .pml { flex: 1 1 auto; font-size: .8rem; color: var(--muted); white-space: nowrap; }
 .prefmenu button { font: inherit; font-size: .85rem; min-width: 34px; height: 30px; padding: 0 8px; color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; white-space: nowrap; }
